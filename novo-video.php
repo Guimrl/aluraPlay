@@ -6,6 +6,10 @@ $pdo = new PDO("sqlite:$dbPath");
 $sql = 'INSERT INTO videos (url, titulo) VALUES (?, ?)';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(1, $_POST['url']);
-$stmt->bindValue(1, $_POST['titulo']);
+$stmt->bindValue(2, $_POST['titulo']);
 
-var_dump($stmt->execute());
+if ($stmt->execute() === false) {
+    header('Location: /index.php?sucesso=0');
+} else {
+    header('Location: /index.php?sucesso=1');
+}
