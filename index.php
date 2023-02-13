@@ -1,7 +1,9 @@
 <?php
+
 $dbPath = __DIR__ . '/banco.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 $videoList = $pdo->query('SELECT * FROM videos;')->fetchAll(\PDO::FETCH_ASSOC);
+
 ?><!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,35 +24,32 @@ $videoList = $pdo->query('SELECT * FROM videos;')->fetchAll(\PDO::FETCH_ASSOC);
     <header>
 
         <nav class="cabecalho">
-            <a class="logo" href="./index.php"></a>
+            <a class="logo" href="/"></a>
 
             <div class="cabecalho__icones">
-                <a href="./pages/enviar-video.php" class="cabecalho__videos"></a>
-                <a href="./pages/login.php" class="cabecalho__sair">Sair</a>
+                <a href="./pages/enviar-video.html" class="cabecalho__videos"></a>
+                <a href="./pages/login.html" class="cabecalho__sair">Sair</a>
             </div>
         </nav>
 
     </header>
 
-    <ul class="videos__container" alt="videos alura">
+    <ul class="videos__container">
         <?php foreach ($videoList as $video): ?>
-            <?php 
-                if (!str_starts_with($video['url'], 'http')) { 
-                    $video['url'] = 'https://www.youtube.com/embed/P4BNi_yPehc';
-                }
-            ?>
-                <li class="videos__item">
-                    <iframe width="100%" height="72%" src="<?= $video['url']; ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <div class="descricao-video">
-                        <img src="./img/logo.png" alt="logo canal alura">
-                        <h3><?= $video['title']; ?></h3>
-                        <div class="acoes-video">
-                            <a href="./pages/enviar-video.php">Editar</a>
-                            <a href="/remover-video.php?id=<?= $video['id']; ?>">Excluir</a>
-                        </div>
-                    </div>
-                </li>
-        <?php endforeach ?>
+        <li class="videos__item">
+            <iframe width="100%" height="72%" src="<?= $video['url']; ?>"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <div class="descricao-video">
+                <h3><?= $video['title']; ?></h3>
+                <div class="acoes-video">
+                    <a href="/formulario.php?id=<?= $video['id']; ?>">Editar</a>
+                    <a href="/remover-video.php?id=<?= $video['id']; ?>">Excluir</a>
+                </div>
+            </div>
+        </li>
+        <?php endforeach; ?>
     </ul>
 </body>
 
