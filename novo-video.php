@@ -3,10 +3,21 @@
 $dbPath = __DIR__ . '/banco.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 
-$sql = 'INSERT INTO videos (url, titulo) VALUES (?, ?)';
+$url = filter_input(INPUT_POST, 'url', FILTER_VALIDATE_URL);
+if ($url === false) {
+    header('Location: /index.php?sucesso=0');
+    exit();
+}
+$title = filter_input(INPUT_POST, 'title');
+if ($title === false) {
+    header('Location: /index.php?sucesso=0');
+    exit();
+}
+
+$sql = 'INSERT INTO videos (url, title) VALUES (?, ?)';
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(1, $_POST['url']);
-$stmt->bindValue(2, $_POST['titulo']);
+$stmt->bindValue(1, $url);
+$stmt->bindValue(2, $title);
 
 if ($stmt->execute() === false) {
     header('Location: /index.php?sucesso=0');
