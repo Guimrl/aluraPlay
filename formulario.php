@@ -16,7 +16,7 @@ if ($id !== false && $id !== null) {
 }
 
 ?>
-<?php require_once 'header.php'; ?>
+<?php require_once 'header.html'; ?>
     <main class="container">
 
         <form class="container__formulario"
@@ -47,4 +47,4 @@ if ($id !== false && $id !== null) {
 
     </main>
 
-<?php require_once 'footer.php'; ?>
+<?php require_once 'footer.html'; ?>

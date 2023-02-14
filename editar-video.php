@@ -1,5 +1,8 @@
 <?php
 
+use src\mvc\Repository\VideoRepository;
+use src\mvc\Entity\Video;
+
 $dbPath = __DIR__ . '/banco.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 
@@ -14,8 +17,8 @@ if ($url === false) {
     header('Location: /?sucesso=0');
     exit();
 }
-$titulo = filter_input(INPUT_POST, 'titulo');
-if ($titulo === false) {
+$title = filter_input(INPUT_POST, 'title');
+if ($title === false) {
     header('Location: /?sucesso=0');
     exit();
 }
@@ -23,8 +26,14 @@ if ($titulo === false) {
 $sql = 'UPDATE videos SET url = :url, title = :title WHERE id = :id;';
 $statement = $pdo->prepare($sql);
 $statement->bindValue(':url', $url);
-$statement->bindValue(':title', $titulo);
+$statement->bindValue(':title', $title);
 $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+$video = new video($url, $title);
+$video->setId($id);
+
+$repository = new VideoRepository($pdo);
+$repository->update($video);
 
 if ($statement->execute() === false) {
     header('Location: /?sucesso=0');

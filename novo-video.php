@@ -1,5 +1,8 @@
 <?php
 
+use src\mvc\Entity\Video;
+use src\mvc\Repository\VideoRepository;
+
 $dbPath = __DIR__ . '/banco.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 
@@ -8,18 +11,15 @@ if ($url === false) {
     header('Location: /?sucesso=0');
     exit();
 }
-$titulo = filter_input(INPUT_POST, 'titulo');
-if ($titulo === false) {
+$title = filter_input(INPUT_POST, 'title');
+if ($title === false) {
     header('Location: /?sucesso=0');
     exit();
 }
 
-$sql = 'INSERT INTO videos (url, title) VALUES (?, ?)';
-$statement = $pdo->prepare($sql);
-$statement->bindValue(1, $url);
-$statement->bindValue(2, $titulo);
+$repository = new VideoRepository($pdo);
 
-if ($statement->execute() === false) {
+if ($repository->add(new Video($url, $title)) === false) {
     header('Location: /?sucesso=0');
 } else {
     header('Location: /?sucesso=1');

@@ -14,8 +14,7 @@ class video
     public function __construct(
         string $url,
         public readonly string $title
-    )
-    {
+    ) {
         $this->setUrl($url);
     }
 
@@ -26,8 +25,8 @@ class video
 
     private function setUrl(string $url)
     {
-        if(filter_var($url, FILTER_VALIDATE_URL) === false) {
-            throw new InvalidArgumentException();
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            throw new \InvalidArgumentException();
         }
 
         $this->url = $url;
