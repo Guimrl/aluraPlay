@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace src\mvc\Entity;
 
-use InvalidArgumentException;
-
-class video
+class Video
 {
     public readonly int $id;
     public readonly string $url;
 
     public function __construct(
         string $url,
-        public readonly string $title
+        public readonly string $title,
     ) {
         $this->setUrl($url);
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     private function setUrl(string $url)
@@ -30,5 +23,10 @@ class video
         }
 
         $this->url = $url;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 }
