@@ -7,7 +7,9 @@ use src\mvc\Controller\{
     EditVideoController,
     VideoFormController,
     VideoListController,
-    DeleteVideoController
+    DeleteVideoController,
+    LoginFormController,
+    LoginController
 };
 
 return [
@@ -15,6 +17,8 @@ return [
     'GET|/novo-video' => VideoFormController::class,
     'GET|/editar-video' => VideoFormController::class,
     'GET|/remover-video' => DeleteVideoController::class,
+    'GET|/login' => LoginFormController::class,
     'POST|/novo-video' => NewVideoController::class,
     'POST|/editar-video' => EditVideoController::class,
+    'POST|/login' => LoginController::class,
 ];
